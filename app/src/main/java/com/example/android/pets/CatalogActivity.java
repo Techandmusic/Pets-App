@@ -46,7 +46,7 @@ public class CatalogActivity extends AppCompatActivity {
         displayDatabaseInfo();
     }
 
-  /*  private void insertPet() {
+   private void insertPet() {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(PetEntry.COLUMN_PET_NAME, "Toto");
@@ -54,7 +54,7 @@ public class CatalogActivity extends AppCompatActivity {
         values.put(PetEntry.COLUMN_PET_GENDER, PetEntry.GENDER_MALE);
         values.put(PetEntry.COLUMN_PET_WEIGHT, 7);
         long newRowId = db.insert(PetEntry.TABLE_NAME, null, values);
-    } */
+    }
 
     /**
      * Temporary helper method to display information in the onscreen TextView about the state of
@@ -68,9 +68,8 @@ public class CatalogActivity extends AppCompatActivity {
         // Create and/or open a database to read from it
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        // Perform this raw SQL query "SELECT * FROM pets"
-        // to get a Cursor that contains all rows from the pets table.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + PetEntry.TABLE_NAME, null);
+        String[] projection = {PetEntry.COLUMN_PET_NAME, PetEntry.COLUMN_PET_BREED, PetEntry.COLUMN_PET_GENDER, PetEntry.COLUMN_PET_WEIGHT};
+        Cursor cursor = db.query(PetEntry.TABLE_NAME, projection, null, null, null,null, null);
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
             // pets table in the database).
