@@ -16,6 +16,8 @@ public final class PetContract {
         public static final String COLUMN_PET_WEIGHT = "weight";
         public static final String COLUMN_PET_BREED = "breed";
         public static final String COLUMN_PET_GENDER = "gender";
+        //Content Uri
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PETS);
 
         //gender constants
         public static final int GENDER_UNKNOWN = 0;
