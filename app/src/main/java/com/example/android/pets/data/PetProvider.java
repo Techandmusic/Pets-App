@@ -211,7 +211,16 @@ public class PetProvider extends ContentProvider {
                 throw new IllegalArgumentException("Pet requires valid weight");
             }
         }
-        return 0;
+        if (values.size() == 0) {
+            return 0;
+        }
+        // Otherwise, get writeable database to update the data
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        // Returns the number of database rows affected by the update statement
+        return database.update(PetEntry.TABLE_NAME, values, selection, selectionArgs);
+
+
     }
 
 
