@@ -1,9 +1,11 @@
 package com.example.android.pets;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import com.example.android.pets.data.PetDbHelper;
 public class CatalogActivity extends AppCompatActivity {
 
     private PetDbHelper mDbHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +56,17 @@ public class CatalogActivity extends AppCompatActivity {
         values.put(PetEntry.COLUMN_PET_BREED, "Terrier");
         values.put(PetEntry.COLUMN_PET_GENDER, PetEntry.GENDER_MALE);
         values.put(PetEntry.COLUMN_PET_WEIGHT, 7);
-        long newRowId = db.insert(PetEntry.TABLE_NAME, null, values);
+        // Insert a new row for Toto into the provider using the ContentResolver.
+        // Use the {@link PetEntry#CONTENT_URI} to indicate that we want to insert
+        // into the pets database table.
+        // Receive the new content URI that will allow us to access Toto's data in the future.
+        Uri newUri = getContentResolver().insert(PetEntry.CONTENT_URI, values);
     }
+
+
+
+
+
 
     /**
      * Temporary helper method to display information in the onscreen TextView about the state of
@@ -65,8 +77,7 @@ public class CatalogActivity extends AppCompatActivity {
         // and pass the context, which is the current activity.
 
 
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
@@ -78,14 +89,7 @@ public class CatalogActivity extends AppCompatActivity {
                 PetEntry.COLUMN_PET_WEIGHT };
 
         // Perform a query on the pets table
-        Cursor cursor = db.query(
-                PetEntry.TABLE_NAME,   // The table to query
-                projection,            // The columns to return
-                null,                  // The columns for the WHERE clause
-                null,                  // The values for the WHERE clause
-                null,                  // Don't group the rows
-                null,                  // Don't filter by row groups
-                null);
+        Cursor cursor = getContentResolver().query(PetEntry.CONTENT_URI, projection, null, null, null);
 
 
         TextView displayView = (TextView) findViewById(R.id.text_view_pet);
