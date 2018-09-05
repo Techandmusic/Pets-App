@@ -16,6 +16,7 @@
 package com.example.android.pets;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -138,6 +139,12 @@ public class EditorActivity extends AppCompatActivity {
         }
     }
 
+    private void deletePet() {
+       //broken method will be fixed later
+
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_editor.xml file.
@@ -159,7 +166,7 @@ public class EditorActivity extends AppCompatActivity {
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
-                // Do nothing for now
+                deletePet();
                 return true;
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:

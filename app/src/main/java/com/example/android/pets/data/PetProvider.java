@@ -134,8 +134,8 @@ public class PetProvider extends ContentProvider {
             throw new IllegalArgumentException("Pet requires valid gender");
         }
         Integer weight = values.getAsInteger(PetEntry.COLUMN_PET_WEIGHT);
-        if (weight != null && weight > 0) {
-            throw new IllegalArgumentException("Weight must be greater than 0");
+        if (weight != null && weight < 0) {
+            throw new IllegalArgumentException("Pet requires a valid weight");
         }
 
 
@@ -253,8 +253,16 @@ public class PetProvider extends ContentProvider {
          * Returns the MIME type of data for the content URI.
          */
         @Override
-        public String getType (Uri uri){
-            return null;
+        public String getType(Uri uri) {
+            final int match = sUriMatcher.match(uri);
+            switch (match) {
+                case PETS:
+                    return PetEntry.CONTENT_LIST_TYPE;
+                case PET_ID:
+                    return PetEntry.CONTENT_ITEM_TYPE;
+                default:
+                    throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+            }
         }
 
 
